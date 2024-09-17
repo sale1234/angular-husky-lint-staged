@@ -32,7 +32,7 @@ jobs:
 
       # Step 4: Run tests (adjust command to your test framework)
       - name: Run tests
-        run: nx test
+        run: npx nx test
 
       # Step 5: Build the project (if applicable)
       # - name: Build project
