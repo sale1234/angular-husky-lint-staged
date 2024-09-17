@@ -3,6 +3,8 @@ name: CI Workflow
 # Trigger the workflow on pull request to the main branch
 # When a pull request is opened or updated , the pipeline will be triggered 
 on:
+  push:
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
