@@ -25,14 +25,18 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 20
+          
+        # Step 3: Install Angular CLI globally
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
 
       # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Run tests (adjust command to your test framework)
+       # Step 5: Run tests
       - name: Run tests
-        run: npx nx test
+        run: ng test --watch=false --browsers=ChromeHeadless
 
       # Step 5: Build the project (if applicable)
       # - name: Build project
