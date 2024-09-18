@@ -1,56 +1,32 @@
-name: CI Workflow
-
-# Trigger the workflow on pull request to the main branch
-# When a pull request is opened or updated , the pipeline will be triggered 
+name: CI
 on:
   push:
-    branches: [ master ]
+    branches:
+      # Change this if your primary branch is not main
+      - main
   pull_request:
-    branches: [ master ]
 
-# Define the jobs to be run
+# Needed for nx-set-shas when run on the main branch
+permissions:
+  actions: read
+  contents: read
+
 jobs:
-  build:
-    # The environment to run the job in (e.g., Ubuntu, Windows, macOS)
+  main:
     runs-on: ubuntu-latest
-
-    # Define the steps involved in this job
     steps:
-      # Step 1: Checkout the code from the repository
-      - name: Checkout Code
-        uses: actions/checkout@v1
-
-      # Step 2: Set up Node.js (example for JavaScript/Node.js projects)
-      - name: Set up Node.js
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
         with:
           node-version: 20
-          
-      # Step 3: Install dependencies
-      - name: Install dependencies
-        run: npm install
+          cache: 'npm'
+      # This line enables distribution
+      # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "e2e-ci" targets have been requested
+      # - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
+      - run: npm ci
 
-       # Step 5: Run tests
-      # - name: Run tests
-      #   run: ng test --watch=false --browsers=ChromeHeadless
+      - uses: nrwl/nx-set-shas@v4
 
-      # Step 5: Build the project (if applicable)
-      - name: Build project
-        run: npm nx build
-
-  # Optional: Deploy Job (only on successful push to `main`)
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v3
-      
-  #     # Step: Setup Deployment (Example: Deploy to Firebase)
-  #     - name: Deploy to Firebase
-  #       uses: w9jds/firebase-action@v1.4.0
-  #       with:
-  #         args: deploy --only hosting
-  #       env:
-  #         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}  # Store token as GitHub secret
-
+      - run: npx nx affected -t lint test build e2e-ci
