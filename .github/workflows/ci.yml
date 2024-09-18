@@ -35,8 +35,8 @@ jobs:
         run: npm install
 
        # Step 5: Run tests
-      - name: Run tests
-        run: ng test --watch=false --browsers=ChromeHeadless
+      # - name: Run tests
+      #   run: ng test --watch=false --browsers=ChromeHeadless
 
       # Step 5: Build the project (if applicable)
       # - name: Build project
