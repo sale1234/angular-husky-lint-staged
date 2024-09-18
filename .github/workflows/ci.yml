@@ -26,10 +26,6 @@ jobs:
         with:
           node-version: 20
           
-        # Step 3: Install Angular CLI globally
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli
-
       # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
@@ -39,8 +35,8 @@ jobs:
       #   run: ng test --watch=false --browsers=ChromeHeadless
 
       # Step 5: Build the project (if applicable)
-      # - name: Build project
-      #   run: nx build
+      - name: Build project
+        run: npm nx build
 
   # Optional: Deploy Job (only on successful push to `main`)
   # deploy:
