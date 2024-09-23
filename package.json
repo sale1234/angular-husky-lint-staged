@@ -41,7 +41,7 @@
     "@commitlint/cz-commitlint": "^19.5.0",
     "@nx/angular": "19.7.3",
     "@nx/devkit": "19.7.3",
-    "@nx/eslint": "19.7.3",
+    "@nx/eslint": "19.8.0",
     "@nx/eslint-plugin": "19.7.3",
     "@nx/jest": "19.7.3",
     "@nx/js": "19.7.3",
